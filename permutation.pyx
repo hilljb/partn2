@@ -103,8 +103,24 @@ cdef class Permutation:
             s += '%s]' % permutation[self.maxSupport]
 
 
+    def __repr__(self):
+        """
+        Machine-readable representation of permutation class instance.
+        """
+        return "permutation.Permutation object"
 
+    def __str__(self):
+        """
+        Human-readable representation of permutation class instance.
+        """
+        return "Permutation"
 
+    def __rmul__(self, p):
+        """
+        Multiply the permutation 'self' by the permutation 'p' on the right.
+        """
+        if not isinstance(p, Permutation):
+            raise TypeError("%s is not an instance of permutation.Permutation" % p)
 
 
 
