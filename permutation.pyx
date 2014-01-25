@@ -30,7 +30,7 @@ from libc.stdint cimport uint32_t
 
 
 ###################################################################################################
-# Imports                                                                                         #
+# Permutation class                                                                               #
 ###################################################################################################
 
 cdef class Permutation:
@@ -47,7 +47,7 @@ cdef class Permutation:
     cdef public                 domain # implemented as a Python set of Python ints and longs
 
     # The degree of a permutation is the size of the domain on which the permutation acts.
-    cdef public uint32_t               degree
+    cdef public uint32_t        degree
 
     # self.maxSupport is the maximum point in self.domain under the usual ordering.
     cdef uint32_t               maxSupport
@@ -56,7 +56,7 @@ cdef class Permutation:
     cdef public uint32_t        order
 
     def __cinit__(self, perm, verbose=False):
-        cdef uint32_t   i_32
+        cdef uint32_t   i32
 
         # initialize a set for the domain
         self.domain = set([])
@@ -89,19 +89,18 @@ cdef class Permutation:
             # form the permutation map
             permutation = <uint32_t *>malloc((self.maxSupport + 1) * sizeof(uint32_t))
             # set to the identity
-            for i_32 in range(self.maxSupport + 1):
-                permutation[i_32] = i_32
+            for i32 in range(self.maxSupport + 1):
+                permutation[i32] = i32
             # now set any non-identity action
             for t in perm:
-                for i in range(len(t)-1):
-                    permutation[t[i]] = <uint32_t>t[i+1]
+                for i32 in range(len(t)-1):
+                    permutation[t[i32]] = <uint32_t>t[i32+1]
                 permutation[t[len(t)-1]] = <uint32_t>t[0]
 
             s = '['
-            for i in range(1, self.maxSupport):
-                s += '%s,' % permutation[i]
+            for i32 in range(1, self.maxSupport):
+                s += '%s,' % permutation[i32]
             s += '%s]' % permutation[self.maxSupport]
-            print s
 
 
 
